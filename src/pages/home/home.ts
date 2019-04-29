@@ -29,13 +29,18 @@ export class HomePage {
     this.menu.swipeEnable(true);
   }
 
+  ionViewDidEnter(){
+    this.auth.refreshToken().subscribe(response =>{
+      this.auth.successfulLogin(response.headers.get('Authorization'));
+      this.navCtrl.setRoot('CategoriasPage');
+    },err =>{}); 
+  }
+
   login(){
     this.auth.authenticate(this.creds).subscribe(response =>{
       this.auth.successfulLogin(response.headers.get('Authorization'));
       this.navCtrl.setRoot('CategoriasPage');
-    },err =>{
-    });
-    
-    
+    },err =>{});  
   }
+  
 }
