@@ -42,5 +42,7 @@ export class HomePage {
       this.navCtrl.setRoot('CategoriasPage');
     },err =>{});  
   }
-  
+  signup(){
+    this.navCtrl.push('SignupPage');
+  }
 }
