@@ -18,8 +18,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class ProdutosPage {
 
   items: ProdutoDTO[];
-  imagensUrl: string = 'assets/imgs'
-
   constructor(
               public navCtrl: NavController, 
               public navParams: NavParams,
@@ -30,7 +28,18 @@ export class ProdutosPage {
     let categoria_id = this.navParams.get('categoria_id')
     this.produtoService.findByCategoria(categoria_id).subscribe(response =>{
       this.items = response['content'];
+      this.loadImageUrls();
     },error =>{});
 
   }
+  loadImageUrls() {
+    for (var i=0; i<this.items.length; i++) {
+      let item = this.items[i];
+      this.produtoService.getSmallImage(item.id)
+        .subscribe(response => {
+          item.imageUrl = `assets/imgs/prod${item.id}-small.jpg`;
+        },
+        error => {});
+    }
+  } 
 }

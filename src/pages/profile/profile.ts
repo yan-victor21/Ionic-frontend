@@ -11,6 +11,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ProfilePage {
   cliente: ClienteDTO;
+  imagensUrl: string = 'assets/imgs'
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public storage: StorageService,
@@ -21,7 +22,7 @@ export class ProfilePage {
     if(localUser && localUser.email){
       this.clienteService.findByEmail(localUser.email).subscribe(response =>{
         this.cliente = response;
-        //this.getImageIfExists();
+        this.getImageIfExists();
       }, error =>{
         if(error.status == 403){
           this.navCtrl.setRoot('HomePage');
@@ -31,11 +32,13 @@ export class ProfilePage {
       this.navCtrl.setRoot('HomePage');
     }
   }
-  /*getImageIfExists(){
-    this.clienteService.getImage(this.cliente.id).subscribe(response =>{
-      this.cliente.imageUrl = `assets/imgs/${this.cliente.id}.jpg`;
-    });*/
-    
-  
 
+  getImageIfExists() {
+    this.clienteService.getImageFromBucket(this.cliente.id)
+    .subscribe(response => {
+      this.cliente.imageUrl = `assets/imgs/cp${this.cliente.id}.jpg`;
+      
+    });
+  }
 }
+

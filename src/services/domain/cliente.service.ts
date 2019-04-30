@@ -12,11 +12,11 @@ export class ClienteService{
     findByEmail(email:string): Observable<ClienteDTO>{
         return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
     }
-
-   /* getImage(id: string): Observable<any>{
-        let url = `assets/imgs/${id}.jpg`
-        return this.http.get(url,{responseType:'blob'});
-    }*/
+    
+    getImageFromBucket(id : string) : Observable<any> {
+        let url = `assets/imgs/cp${id}.jpg`
+        return this.http.get(url, {responseType : 'blob'});
+    }
 
     insert(obj: ClienteDTO){
         return this.http.post(
