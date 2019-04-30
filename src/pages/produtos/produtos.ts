@@ -32,6 +32,7 @@ export class ProdutosPage {
     },error =>{});
 
   }
+
   loadImageUrls() {
     for (var i=0; i<this.items.length; i++) {
       let item = this.items[i];
@@ -42,6 +43,7 @@ export class ProdutosPage {
         error => {});
     }
   } 
+  
   showDetail(produto_id:string){
     this.navCtrl.push('ProdutoDetailPage',{produto_id:produto_id});
   }
